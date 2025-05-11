@@ -19,10 +19,10 @@ const MainLayout = () => {
     if (isAuthenticated && !inApp) {
       //redirect to home
       //replace instead redirect so cannot go  back to loading screen
-      router.replace("/home");
+      router.replace("/Home");
     } else if (isAuthenticated===false) {
       //redirect to signin
-      router.replace("/signin");
+      router.replace("/SignIn");
     }
   }, [isAuthenticated]);
 
