@@ -1,3 +1,4 @@
+//slot component renders the childen of the layout
 import { Slot, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 import { AuthContextProvider, useAuth } from "../context/AuthContext";
@@ -5,7 +6,7 @@ import "../global.css";
 
 const MainLayout = () => {
   const { isAuthenticated } = useAuth();
-  const segments = useSegments();
+  const segments = useSegments();//return array of segment values in current route
   const router= useRouter();
 
   //everytime auth state changes
@@ -13,7 +14,7 @@ const MainLayout = () => {
     //check if user is authenticated
     if (typeof isAuthenticated === "undefined") return;
 
-    const inApp = segments[0] === "(app)";
+    const inApp = segments[0] === "(app)";// means user in in (app) folder
 
     //redirect to home //else to signin
     if (isAuthenticated && !inApp) {

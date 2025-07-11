@@ -9,9 +9,9 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     // onAuthStateChanged
-    setTimeout(() => {
-       setIsAuthenticated(false);
-    }, 3000);
+    // setTimeout(() => {
+    setIsAuthenticated(false);
+    // }, 3000);
   }, []);
 
   const login = async (email, password) => {
@@ -27,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
       console.error("Logout error:", e);
     }
   };
-  const register = async ( email, password,user,profileurl) => {
+  const register = async (email, password, user, profileurl) => {
     try {
     } catch (e) {
       console.error("Logout error:", e);
@@ -35,16 +35,18 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, register }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, login, logout, register }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth=() => {
+export const useAuth = () => {
   const value = useContext(AuthContext);
   if (!value) {
     throw new Error("useAuth must be wrapped within an AuthContextProvider");
   }
-  return  value;
-}
+  return value;
+};

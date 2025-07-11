@@ -1,11 +1,93 @@
-import { Text, View } from 'react-native'
-
+import Feather from "@expo/vector-icons/Feather";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+import { StatusBar } from "react-native-web";
 const SignIn = () => {
   return (
-    <View>
-      <Text>SignIn</Text>
-    </View>
-  )
-}
+    <View className="flex-1 ">
+      <StatusBar style="dark" />
+      <View
+        style={{ paddingTop: hp(8), paddingHorizontal: wp(5) }}
+        className="flex-1 gap-12"
+      >
+        {/*signin image */}
+        <View className="items-center">
+          <Image
+            style={{ height: hp(25), width: wp(50) }}
+            source={require("../assets/asset/login.png")}
+          />
+        </View>
 
-export default SignIn
+        {/*signin text */}
+        <View className="items-center">
+          <Text
+            style={{ fontSize: hp(4) }}
+            className="font-semibold tracking-wider text-center text-neutral-800"
+          >
+            Sign In
+          </Text>
+          <Text
+            style={{ fontSize: hp(2) }}
+            className="text-gray-500 text-center mt-2"
+          >
+            Welcome back! Please sign in to your account.
+          </Text>
+
+          {/*signin form */}
+          <View className="w-full mt-8 gap-4">
+            <View
+              style={{ height: hp(5) }}
+              className="flex-row gap-4  px-4  bg-neutral-100 items-center rounded-xl"
+            >
+              <Feather name="mail" size={hp(2.7)} color="black" />
+
+              <TextInput
+                style={{
+                  flex: 1,
+                  paddingHorizontal: wp(2),
+                  fontSize: hp(2),
+                }}
+                placeholder="Email"
+                placeholderTextColor="gray"
+                className="text-base"
+              />
+            </View>
+            <View className=" gap-3">
+              <View
+                style={{ height: hp(5) }}
+                className="flex-row gap-4  px-4  bg-neutral-100 items-center rounded-xl"
+              >
+                <Feather name="lock" size={hp(2.7)} color="black" />
+
+                <TextInput
+                  style={{
+                    flex: 1,
+                    paddingHorizontal: wp(2),
+                    fontSize: hp(2),
+                  }}
+                  placeholder="Password"
+                  placeholderTextColor="gray"
+                  className="text-base"
+                />
+              </View>
+              <Text style={{ fontSize: hp(1.5) }} className="text-right font-semibold text-neutral-500" >Forgot Password ?</Text>
+            </View>
+
+            {/*submit button */}
+            <TouchableOpacity
+              style={{ height: hp(5) }}
+              className="bg-neutral-800 items-center justify-center rounded-xl tracking-wider"
+            >
+              <Text style={{ fontSize: hp(2) }} className="text-white font-semibold">Sign In</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default SignIn;
