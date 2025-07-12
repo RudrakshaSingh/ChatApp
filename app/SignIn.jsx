@@ -1,13 +1,29 @@
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
+import { useRef, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import { StatusBar } from "react-native-web";
+import Loading from "../components/Loading";
 const SignIn = () => {
   const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
+
+  const handleLogin = async () => {
+    if (!emailRef.current || !passwordRef.current) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    //login
+  };
   return (
     <View className="flex-1 ">
       <StatusBar style="dark" />
@@ -47,6 +63,7 @@ const SignIn = () => {
               <Feather name="mail" size={hp(2.7)} color="black" />
 
               <TextInput
+                onChangeText={(text) => (emailRef.current = text)}
                 style={{
                   flex: 1,
                   paddingHorizontal: wp(2),
@@ -65,26 +82,50 @@ const SignIn = () => {
                 <Feather name="lock" size={hp(2.7)} color="black" />
 
                 <TextInput
+                  onChangeText={(text) => (passwordRef.current = text)}
                   style={{
                     flex: 1,
                     paddingHorizontal: wp(2),
                     fontSize: hp(2),
                   }}
+                  secureTextEntry={true}
                   placeholder="Password"
                   placeholderTextColor="gray"
                   className="text-base"
                 />
               </View>
-              <Text style={{ fontSize: hp(1.5) }} className="text-right font-semibold text-neutral-500" >Forgot Password ?</Text>
+              <Text
+                style={{ fontSize: hp(1.5) }}
+                className="text-right font-semibold text-neutral-500"
+              >
+                Forgot Password ?
+              </Text>
             </View>
 
             {/*submit button */}
-            <TouchableOpacity
-              style={{ height: hp(5) }}
-              className="bg-neutral-800 items-center justify-center rounded-xl tracking-wider"
-            >
-              <Text style={{ fontSize: hp(2) }} className="text-white font-semibold">Sign In</Text>
-            </TouchableOpacity>
+            <View className="justify-center items-center">
+              {loading ? (
+                <View
+                  style={{ height: hp(5), aspectRatio: 1 }}
+                  className="items-center justify-center"
+                >
+                  <Loading size={hp( 18)} />
+                </View>
+              ) : (
+                <TouchableOpacity
+                  onPress={handleLogin}
+                  style={{ height: hp(5) }}
+                  className="bg-neutral-800 w-full items-center justify-center rounded-xl tracking-wider"
+                >
+                  <Text
+                    style={{ fontSize: hp(2) }}
+                    className="text-white font-semibold"
+                  >
+                    Sign In
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
 
             {/*sign up text */}
             <View className="flex-row items-center justify-center">
