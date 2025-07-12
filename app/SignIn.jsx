@@ -109,7 +109,7 @@ const SignIn = () => {
                   style={{ height: hp(5), aspectRatio: 1 }}
                   className="items-center justify-center"
                 >
-                  <Loading size={hp( 18)} />
+                  <Loading size={hp(18)} />
                 </View>
               ) : (
                 <TouchableOpacity
