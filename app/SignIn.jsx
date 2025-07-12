@@ -1,4 +1,5 @@
 import Feather from "@expo/vector-icons/Feather";
+import { useRouter } from "expo-router";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
   heightPercentageToDP as hp,
@@ -6,6 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import { StatusBar } from "react-native-web";
 const SignIn = () => {
+  const router = useRouter();
   return (
     <View className="flex-1 ">
       <StatusBar style="dark" />
@@ -83,6 +85,24 @@ const SignIn = () => {
             >
               <Text style={{ fontSize: hp(2) }} className="text-white font-semibold">Sign In</Text>
             </TouchableOpacity>
+
+            {/*sign up text */}
+            <View className="flex-row items-center justify-center">
+              <Text
+                style={{ fontSize: hp(1.5) }}
+                className="font-semibold text-neutral-500"
+              >
+                Don&apos;t have an account ?{" "}
+              </Text>
+              <TouchableOpacity onPress={() => router.push("/SignUp")}>
+                <Text
+                  style={{ fontSize: hp(1.5) }}
+                  className="font-semibold text-indigo-500"
+                >
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
