@@ -8,6 +8,7 @@ import {
 } from "react-native-responsive-screen";
 import { StatusBar } from "react-native-web";
 import Loading from "../components/Loading";
+import CustomKeyboardView from "../components/customKeyboardView";
 const SignUp = () => {
   const router = useRouter();
 
@@ -32,6 +33,7 @@ const SignUp = () => {
     //login
   };
   return (
+    <CustomKeyboardView>
     <View className="flex-1 ">
       <StatusBar style="dark" />
       <View
@@ -183,7 +185,7 @@ const SignUp = () => {
           </View>
         </View>
       </View>
-    </View>
+    </View>  </CustomKeyboardView>
   );
 };
 

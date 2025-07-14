@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
@@ -8,6 +9,7 @@ import {
 } from "react-native-responsive-screen";
 import { StatusBar } from "react-native-web";
 import Loading from "../components/Loading";
+import CustomKeyboardView from "../components/customKeyboardView";
 const SignIn = () => {
   const router = useRouter();
 
@@ -25,6 +27,7 @@ const SignIn = () => {
     //login
   };
   return (
+    <CustomKeyboardView>
     <View className="flex-1 ">
       <StatusBar style="dark" />
       <View
@@ -133,7 +136,7 @@ const SignIn = () => {
                 style={{ fontSize: hp(1.5) }}
                 className="font-semibold text-neutral-500"
               >
-                Don&apos;t have an account ?{" "}
+                Don't have an account ?{" "}
               </Text>
               <TouchableOpacity onPress={() => router.push("/SignUp")}>
                 <Text
@@ -147,7 +150,7 @@ const SignIn = () => {
           </View>
         </View>
       </View>
-    </View>
+    </View></CustomKeyboardView>
   );
 };
 
