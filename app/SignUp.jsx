@@ -9,10 +9,13 @@ import {
 } from "react-native-responsive-screen";
 import CustomKeyboardView from "../components/CustomKeyboardView";
 import Loading from "../components/Loading";
+import { useAuth } from "../context/AuthContext";
 const SignUp = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+
+  const {register}= useAuth();
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -30,7 +33,26 @@ const SignUp = () => {
       return;
     }
 
-    //login
+    setLoading(true);
+    // Register user logic here
+
+    let res= await register(
+      emailRef.current,
+      passwordRef.current,
+      userNameRef.current,
+      profilePicRef.current
+    );
+    setLoading(false);
+    if (res.success) {
+      alert("Registration successful!");
+      router.push("/login");
+    } else {
+      let msg= res.message || "Registration failed. Please try again.";
+      if(msg.includes("(auth/invalid email)")) {
+        msg = "Invalid email.";
+      }
+      alert(msg);
+    }
   };
   return (
     <CustomKeyboardView>
