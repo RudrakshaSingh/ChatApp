@@ -1,15 +1,18 @@
-/* eslint-disable react/no-unescaped-entities */
+ 
+ 
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useRef, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { StatusBar } from "react-native-web";
+
+import CustomKeyboardView from "../components/CustomKeyboardView";
+
 import Loading from "../components/Loading";
-import CustomKeyboardView from "../components/customKeyboardView";
 const SignIn = () => {
   const router = useRouter();
 
@@ -136,7 +139,7 @@ const SignIn = () => {
                 style={{ fontSize: hp(1.5) }}
                 className="font-semibold text-neutral-500"
               >
-                Don't have an account ?{" "}
+                {"Don\u2019t have an account ?"}
               </Text>
               <TouchableOpacity onPress={() => router.push("/SignUp")}>
                 <Text
@@ -150,7 +153,8 @@ const SignIn = () => {
           </View>
         </View>
       </View>
-    </View></CustomKeyboardView>
+    </View>
+    </CustomKeyboardView>
   );
 };
 

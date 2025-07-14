@@ -1,7 +1,7 @@
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 
 const ios = Platform.OS === "ios";
-export default function customKeyboardView({ children }) {
+export default function CustomKeyboardView({ children }) {
   return (
     <KeyboardAvoidingView
       behavior={ios ? "padding" : "height"}

@@ -1,14 +1,14 @@
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useRef, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
-import { StatusBar } from "react-native-web";
+import CustomKeyboardView from "../components/CustomKeyboardView";
 import Loading from "../components/Loading";
-import CustomKeyboardView from "../components/customKeyboardView";
 const SignUp = () => {
   const router = useRouter();
 
@@ -185,7 +185,8 @@ const SignUp = () => {
           </View>
         </View>
       </View>
-    </View>  </CustomKeyboardView>
+    </View>
+  </CustomKeyboardView>
   );
 };
 
