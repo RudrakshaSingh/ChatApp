@@ -43,13 +43,13 @@ const SignUp = () => {
       profilePicRef.current
     );
     setLoading(false);
-    if (res.success) {
-      alert("Registration successful!");
-      router.push("/login");
-    } else {
-      let msg= res.message || "Registration failed. Please try again.";
+    if (!res.success){
+      let msg= res.msg || "Registration failed. Please try again.";
       if(msg.includes("(auth/invalid email)")) {
         msg = "Invalid email.";
+      }
+      if(msg.includes("(auth/email-already-in-use)")) {
+        msg = "Email already in use.";
       }
       alert(msg);
     }

@@ -9,11 +9,13 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
+import { useAuth } from "../context/AuthContext";
 
 import CustomKeyboardView from "../components/CustomKeyboardView";
 
 import Loading from "../components/Loading";
 const SignIn = () => {
+  const { login } = useAuth();
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -27,7 +29,14 @@ const SignIn = () => {
       return;
     }
 
-    //login
+    setLoading(true);
+
+    let res = await login(emailRef.current, passwordRef.current);
+    setLoading(false);
+    if (!res.success) {
+      alert("sign in failed: " + res.msg);
+    }
+    
   };
   return (
     <CustomKeyboardView>

@@ -1,5 +1,10 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebaseConfig"; // Adjust the import path as necessary
 
@@ -11,10 +16,11 @@ export const AuthContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);
 
   useEffect(() => {
-    const unsub=onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
         setIsAuthenticated(true);
+        setUser(user);
+        updateUserData(user.uid);
       } else {
         setUser(null);
         setIsAuthenticated(false);
@@ -23,36 +29,66 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsub(); // Cleanup subscription on unmount
   }, []);
 
+  const updateUserData = async (userId) => {
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+     let data = docSnap.data();
+      setUser({...user,username:data.username,profileurl:data.profileurl,userId:data.uid});
+    }
+  };
+
   const login = async (email, password) => {
     try {
+      
+      const response= await signInWithEmailAndPassword(auth,email, password);
+      return { success: true};
     } catch (e) {
       console.error("Login error:", e);
+      let msg = e.message;
+      if (msg.includes("(auth/invalid-email)")) {
+        msg = "Invalid email.";
+      }
+      if(msg.includes("(auth/invalid-credential)")) {
+        msg = "Invalid credentials.";
+      }
+      return { success: false, msg };
     }
   };
 
   const logout = async () => {
     try {
+      await signOut(auth);
+      setUser(null);
+      setIsAuthenticated(false);
+      return { success: true };
     } catch (e) {
-      console.error("Logout error:", e);
+      return { success: false, msg: e.message, error: e };
     }
   };
   const register = async (email, password, username, profileurl) => {
     try {
-      const res= await createUserWithEmailAndPassword(auth,email, password);
-      console.log("User registered:", res?.user);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      // console.log("User registered:", res?.user);
       //user state will be updated by onAuthStateChanged in above useEffect
 
       // Store user data in Firestore it updates/create existing user document
-      await setDoc(doc(db,"users",res?.user?.uid),{
+      await setDoc(doc(db, "users", res?.user?.uid), {
         username,
         email,
         profileurl,
         uid: res?.user?.uid,
       });
-      return {success: true, data: res?.user};
+      return { success: true, data: res?.user };
     } catch (e) {
-      console.error("Register error:", e);
-      return {success: false, message: e.message};
+      let msg = e.message;
+      if (msg.includes("(auth/invalid-email)")) {
+        msg = "Invalid email.";
+      }
+      if(msg.includes("(auth/email-already-in-use)")) {
+        msg = "Email already in use.";
+      }
+      return { success: false, msg };
     }
   };
 
