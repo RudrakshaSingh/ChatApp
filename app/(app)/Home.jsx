@@ -8,7 +8,7 @@ const Home = () => {
     await logout();
   }
   return (
-    <View>
+    <View className="flex-1 bg-white">
       <Text>Home</Text>
       <Pressable onPress={handleLogout}>
         <Text>Sign Out</Text>
