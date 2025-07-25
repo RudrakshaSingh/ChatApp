@@ -29,12 +29,14 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsub(); // Cleanup subscription on unmount
   }, []);
 
-  const updateUserData = async (userId) => {
-    const docRef = doc(db, "users", userId);
+  const updateUserData = async (uid) => {
+    const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
      let data = docSnap.data();
-      setUser({...user,username:data.username,profileurl:data.profileurl,userId:data.uid});
+      setUser({...user,username:data.username,profileurl:data.profileurl,uid:data.uid});
+
+      // setUser({username:data.username,profileurl:data.profileurl,uid:data.uid});
     }
   };
 
