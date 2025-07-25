@@ -1,5 +1,6 @@
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import { Platform, Text, View } from "react-native";
 import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
@@ -16,7 +17,12 @@ export default function HomeHeader() {
   const { top } = useSafeAreaInsets();
 
   const handleProfile = () => {
-    console.log("profile");
+    router.push({
+      pathname: "/Profile",
+      params: {
+        user: JSON.stringify(user),
+      },
+    });
   };
   const handleLogout = async () => {
     await logout();
@@ -53,7 +59,7 @@ export default function HomeHeader() {
                 shadowOpacity: 0.5,
                 shadowOffset: { width: 0, height: 0 },
 
-                width:160
+                width: 160,
               },
             }}
           >

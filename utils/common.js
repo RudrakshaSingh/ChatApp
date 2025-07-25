@@ -7,12 +7,33 @@ export const getRoomId=(userId1,userId2)=>{
 }
 
 export const formatDate = (date) => {
-  let day = date.getDate();
-  let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  let month = monthNames[date.getMonth()];
-  let year = date.getFullYear();
+    if (isNaN(date)) {
+    return ""; // or return "Invalid date"
+  }
+    
+  const now = new Date();
 
-  const currentYear = new Date().getFullYear();
+  const isSameDay =
+    date.getDate() === now.getDate() &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === now.getFullYear();
+
+  if (isSameDay) {
+    // Format time as HH:MM AM/PM
+    let hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+
+    return `${hours}:${minutes} ${ampm}`;
+  }
+
+  const day = date.getDate();
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  const currentYear = now.getFullYear();
 
   return currentYear === year
     ? `${day} ${month}`

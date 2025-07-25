@@ -6,6 +6,11 @@ const _layout = () => {
     <Stack>
       <Stack.Screen name="Home"
       options={{ header: () => <HomeHeader /> }} />
+      <Stack.Screen
+        name="Profile"
+        options={{ headerShown: false }}
+      />
+
     </Stack>
   )
 }

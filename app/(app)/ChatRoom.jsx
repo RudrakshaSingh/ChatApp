@@ -12,7 +12,7 @@ import {
     Timestamp,
 } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { Keyboard, TextInput, TouchableOpacity, View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import ChatRoomHeader from "../../components/ChatRoomHeader";
 import CustomKeyboardView from "../../components/CustomKeyboardView";
