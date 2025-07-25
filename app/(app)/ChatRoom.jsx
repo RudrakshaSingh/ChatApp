@@ -28,6 +28,7 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const textRef = useRef(); //updating ref do not rerender the app
   const inputRef = useRef(null);
+  const scroolViewRef = useRef(null);
 
   useEffect(() => {
     createRoomIfNotExist();
@@ -44,7 +45,16 @@ export default function ChatRoom() {
       });
       setMessages([...allMessages]);
     });
-    return unsubscribe;
+
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      updateScrollView
+    );
+
+    return () => {
+      unsubscribe();
+      keyboardDidShowListener.remove();
+    };
   }, []);
 
   const createRoomIfNotExist = async () => {
@@ -58,7 +68,7 @@ export default function ChatRoom() {
 
   const handleSendMessage = async () => {
     console.log("clicked");
-    
+
     //send message to firebase
     let message = textRef.current.trim();
     if (!message) return;
@@ -81,8 +91,15 @@ export default function ChatRoom() {
     }
   };
 
-  console.log("mee",messages);
-  
+  useEffect(() => {
+    updateScrollView();
+  }, [messages]);
+  const updateScrollView = () => {
+    setTimeout(() => {
+      scroolViewRef?.current?.scrollToEnd({ animated: true });
+    });
+  };
+
   return (
     <CustomKeyboardView inChat={true}>
       <View className="flex-1 bg-white">
@@ -91,7 +108,11 @@ export default function ChatRoom() {
         <View className="h-3 border-b border-neutral-300" />
         <View className="flex-1 justify-between bg-neutral-100 overflow-visible">
           <View className="flex-1">
-            <MessageList messages={messages} currentUser={user} />
+            <MessageList
+              scroolViewRef={scroolViewRef}
+              messages={messages}
+              currentUser={user}
+            />
           </View>
 
           <View style={{ marginBottom: hp(2.7) }} className="pt-2">
